@@ -13,7 +13,9 @@ class CarReturnController extends Controller
     {
         $carReturn = CarReturn::with(['carloan' => function ($q) {
             $q->with('car', 'user');
-        }])->get();
+        }])
+            ->orderBy('created_At', 'desc')
+            ->get();
         return view('pages.admin.car-return.index', compact('carReturn'));
     }
 

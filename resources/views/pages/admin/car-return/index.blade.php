@@ -66,7 +66,12 @@
                     @isset($cars)
                         @forelse ($cars as $car)
                             @php
-                                $totalSewa = Carbon\Carbon::parse($car->date_start)->diffInDays($car->date_end) * $car->car->rental_rates;
+                                $dayDifference = Carbon\Carbon::parse($car->date_start)->diffInDays($car->date_end);
+                                if ($dayDifference >= 0) {
+                                    $dayDifference = max($dayDifference, 1);
+                                }
+                                $totalSewa = $dayDifference * $car->car->rental_rates;
+                                
                             @endphp
                             <div class="col-4">
                                 <div class="row">
@@ -104,7 +109,7 @@
                                     </div>
                                     <div class="col-6">
                                         <label>Total Hari Peminjaman</label>
-                                        <p>{{ Carbon\Carbon::parse($car->date_start)->diffInDays($car->date_end) }}</p>
+                                        <p>{{ $dayDifference }}</p>
                                     </div>
                                     <div class="col-6">
                                         <label>Total Pembayaran</label>
@@ -112,9 +117,6 @@
                                     </div>
                                     <form action="{{ route('carreturn.store') }}" method="post">
                                         @csrf
-
-
-
                                         <input type="text" hidden name="car_loan_id" value="{{ $car->id }}">
                                         <input type="text" hidden name="total" value="{{ $totalSewa }}">
                                         <input type="text" hidden name="car_id" value="{{ $car->car->id }}">

@@ -35,6 +35,12 @@
                 </div>
             </div>
             <div class="card-body">
+                @if (session('error'))
+                    <div class="alert alert-success alert-dismissible show fade">
+                        {{ session('error') }}
+                        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                    </div>
+                @endif
                 <form class="form form-vertical" method="POST" action="{{ route('carloan.store') }}">
                     @csrf
                     <div class="form-body">
