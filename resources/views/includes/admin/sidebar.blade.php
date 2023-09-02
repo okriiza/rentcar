@@ -49,8 +49,32 @@
                         <span>Dashboard</span>
                     </a>
                 </li>
+                <li class="sidebar-item {{ request()->routeIs('admin.user.index') ? 'active' : '' }}">
+                    <a href="{{ route('admin.user.index') }}" class="sidebar-link">
+                        <i class="bi bi-person"></i>
+                        <span>User</span>
+                    </a>
+                </li>
+                <li class="sidebar-item {{ request()->routeIs('admin.car.index') ? 'active' : '' }}">
+                    <a href="{{ route('admin.car.index') }}" class="sidebar-link">
+                        <i class="bi bi-car-front"></i>
+                        <span>Manajemen Mobil</span>
+                    </a>
+                </li>
+                <li class="sidebar-item {{ request()->routeIs('admin.carloan.index') ? 'active' : '' }}">
+                    <a href="{{ route('admin.carloan.index') }}" class="sidebar-link">
+                        <i class="bi bi-car-front-fill"></i>
+                        <span>Peminjaman Mobil</span>
+                    </a>
+                </li>
+                <li class="sidebar-item {{ request()->routeIs('admin.carreturn.index') ? 'active' : '' }}">
+                    <a href="{{ route('admin.carreturn.index') }}" class="sidebar-link">
+                        <i class="bi bi-car-front-fill"></i>
+                        <span>Pengembalian Mobil</span>
+                    </a>
+                </li>
 
-                <li class="sidebar-item has-sub {{ request()->routeIs('component*') ? 'active' : '' }}">
+                {{-- <li class="sidebar-item has-sub {{ request()->routeIs('component*') ? 'active' : '' }}">
                     <a href="#" class="sidebar-link">
                         <i class="bi bi-stack"></i>
                         <span>Components</span>
@@ -230,7 +254,7 @@
                                 (jQuery)</a>
                         </li>
                     </ul>
-                </li>
+                </li> --}}
             </ul>
         </div>
     </div>

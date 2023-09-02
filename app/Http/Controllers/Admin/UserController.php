@@ -1,34 +1,27 @@
 <?php
 
-namespace App\Http\Controllers\Auth;
+namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Models\User;
-use App\Providers\RouteServiceProvider;
-use Illuminate\Auth\Events\Registered;
-use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Validation\Rules;
-use Illuminate\View\View;
 
-class RegisteredUserController extends Controller
+class UserController extends Controller
 {
-    /**
-     * Display the registration view.
-     */
-    public function create(): View
+    public function index()
     {
-        return view('pages.auth.register');
+        $users = User::orderBy('created_At', 'desc')->get();
+        return view('pages.admin.user.index', compact('users'));
     }
 
-    /**
-     * Handle an incoming registration request.
-     *
-     * @throws \Illuminate\Validation\ValidationException
-     */
-    public function store(Request $request): RedirectResponse
+    public function create()
+    {
+        return view('pages.admin.user.create');
+    }
+
+    public function store(Request $request)
     {
         $request->validate([
             'name' => ['required', 'string', 'max:255'],
@@ -39,19 +32,24 @@ class RegisteredUserController extends Controller
             'password' => ['required', 'confirmed', Rules\Password::defaults()],
         ]);
 
-        $user = User::create([
+        User::create([
             'name' => $request->name,
             'email' => $request->email,
             'phone' => $request->phone,
             'address' => $request->address,
             'sim_number' => $request->sim_number,
+            'roles' => $request->roles,
             'password' => Hash::make($request->password),
         ]);
 
-        event(new Registered($user));
+        return to_route('admin.user.index')->with('success', 'User Berhasil Di Buat');
+    }
 
-        Auth::login($user);
+    public function destroy($id)
+    {
+        $user = User::findOrFail($id);
+        $user->delete();
 
-        return redirect(RouteServiceProvider::HOME);
+        return to_route('admin.user.index')->with('success', 'User Berhasil Di Hapus');
     }
 }
