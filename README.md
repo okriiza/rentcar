@@ -26,7 +26,11 @@
     ```bash
     php artisan serve
     ```
-8. login
+8. Access to dashboard
+    ```bash
+    http://127.0.0.1:8000/pages/dashboard
+    ```
+9. login
    ```bash
    email: admin@gmail.com
    password: password
