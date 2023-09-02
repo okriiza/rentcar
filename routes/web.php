@@ -42,6 +42,7 @@ Route::middleware('auth')->prefix('admin')->name('admin.')->group(function () {
 
     Route::get('car-return', [CarReturnController::class, 'index'])->name('carreturn.index');
     Route::get('car-return/search', [CarReturnController::class, 'search'])->name('carreturn.search');
+    Route::post('car-return', [CarReturnController::class, 'store'])->name('carreturn.store');
 
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');

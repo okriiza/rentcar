@@ -14,7 +14,8 @@ class CarLoan extends Model
         'date_start',
         'date_end',
         'car_id',
-        'user_id'
+        'user_id',
+        'status'
     ];
 
     public function car()

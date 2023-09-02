@@ -23,7 +23,7 @@ class CarsSeeder extends Seeder
             [
                 'brand' => 'Toyota',
                 'model' => 'Alphard',
-                'plat_number' => 'D 2332 AW',
+                'plat_number' => 'D 4125 ZZ',
                 'rental_rates' => '100000'
             ],
         ];

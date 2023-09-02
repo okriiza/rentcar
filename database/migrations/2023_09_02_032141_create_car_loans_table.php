@@ -17,6 +17,7 @@ return new class extends Migration
             $table->date('date_end');
             $table->foreignId('car_id')->references('id')->on('cars');
             $table->foreignId('user_id')->references('id')->on('users');
+            $table->string('status')->default('BELUM LUNAS');
             $table->timestamps();
         });
     }

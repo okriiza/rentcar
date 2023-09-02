@@ -61,35 +61,97 @@
                         </div>
                     </div>
                 </form>
+                <div class="row mt-5">
+                    @foreach ($cars as $car)
+                        @php
+                            $totalSewa = Carbon\Carbon::parse($car->date_start)->diffInDays($car->date_end) * $car->car->rental_rates;
+                        @endphp
+                        <div class="col-4">
+                            <div class="row">
+                                <div class="col-6">
+                                    <label>User Peminjam</label>
+                                    <p>{{ $car->user->name }}</p>
+                                </div>
+                                <div class="col-6">
+                                    <label>Tanggal Mulai</label>
+                                    <p>{{ $car->date_start }}</p>
+                                </div>
+                                <div class="col-6">
+                                    <label>Tanggal Selesai</label>
+                                    <p>{{ $car->date_end }}</p>
+                                </div>
+                                <div class="col-6">
+                                    <label>Merk</label>
+                                    <p>{{ $car->car->brand }}</p>
+                                </div>
+                                <div class="col-6">
+                                    <label>Plat Nomor Mobil</label>
+                                    <p>{{ $car->car->plat_number }}</p>
+                                </div>
+                                <div class="col-6">
+                                    <label>Model</label>
+                                    <p>{{ $car->car->model }}</p>
+                                </div>
+                                <div class="col-6">
+                                    <label>User Peminjam</label>
+                                    <p>{{ $car->car->model }}</p>
+                                </div>
+                                <div class="col-6">
+                                    <label>Harga Per Hari</label>
+                                    <p>Rp.{{ number_format($car->car->rental_rates) }}</p>
+                                </div>
+                                <div class="col-6">
+                                    <label>Total Hari Peminjaman</label>
+                                    <p>{{ Carbon\Carbon::parse($car->date_start)->diffInDays($car->date_end) }}</p>
+                                </div>
+                                <div class="col-6">
+                                    <label>Total Pembayaran</label>
+                                    <p>Rp.{{ number_format($totalSewa) }}</p>
+                                </div>
+                                <form action="{{ route('admin.carreturn.store') }}" method="post">
+                                    @csrf
 
-                @foreach ($cars as $car)
-                    <div class="card">
-                        <div class="card-body">
-                            <tr>
-                                <td>{{ $car->date_start }}</td>
-                                <td>{{ $car->date_end }}</td>
-                                <td>{{ $car->car->brand }}</td>
-                                <td>{{ $car->car->plat_number }}</td>
-                                <td>{{ $car->car->model }}</td>
-                                <td>{{ $car->user->name }}</td>
-                                <td>
-                                    {{ Carbon\Carbon::parse($car->date_start)->diffInDays($car->date_end) }}
-                                </td>
-                                <td>
-                                    <form action="{{ route('admin.car.destroy', $car->id) }}" method="post"
-                                        class="d-inline">
-                                        @csrf
-                                        @method('delete')
-                                        <button class="btn btn-outline-success shadow btn-xs sharp me-1 mb-1">
-                                            <i class="bi bi-arrow-return-right"></i>
-                                            Return
-                                        </button>
-                                    </form>
-                                </td>
-                            </tr>
+
+
+                                    <input type="text" hidden name="car_loan_id" value="{{ $car->id }}">
+                                    <input type="text" hidden name="total" value="{{ $totalSewa }}">
+                                    <input type="text" hidden name="car_id" value="{{ $car->car->id }}">
+
+                                    <button class="btn btn-outline-success shadow btn-xs sharp me-1 mb-1">
+                                        <i class="bi bi-arrow-return-right"></i>
+                                        Return
+                                    </button>
+                                </form>
+                            </div>
                         </div>
-                    </div>
-                @endforeach
+                    @endforeach
+                </div>
+                <div class="mt-3 mb-2">
+                    <h5>List Pengembalian</h5>
+                </div>
+                <table class="table table-striped" id="table1">
+                    <thead>
+                        <tr>
+                            <th>Nama</th>
+                            <th>Mobil</th>
+                            <th>Total</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @php
+                            $number = 1;
+                        @endphp
+                        @forelse ($carReturn as $car)
+                            <tr>
+                                <td>{{ $car->carloan->user->name ?? '' }}</td>
+                                <td>{{ $car->carloan->car->brand }} - {{ $car->carloan->car->plat_number }}</td>
+                                <td>Rp.{{ number_format($car->total) }}</td>
+                            </tr>
+                        @empty
+                            <td colspan="6" class="text-center">Data Tidak Ditemukan</td>
+                        @endforelse
+                    </tbody>
+                </table>
             </div>
         </div>
     </section>

@@ -72,12 +72,14 @@
                                     <label for="cars">Mobil</label>
                                     <select class="form-select @error('car_id') is-invalid @enderror" id="basicSelect"
                                         name="car_id">
-                                        @foreach ($cars as $car)
+                                        @forelse ($cars as $car)
                                             <option value="{{ $car->id }}">{{ $car->brand }} - {{ $car->model }} -
                                                 Rp.
                                                 {{ number_format($car->rental_rates) }}
                                             </option>
-                                        @endforeach
+                                        @empty
+                                            <option disabled selected>Mobil Sudah Terboking semua</option>
+                                        @endforelse
                                     </select>
                                     @error('car_id')
                                         <div class="invalid-feedback">
@@ -92,10 +94,12 @@
                                     <label for="users">User Peminjam</label>
                                     <select class="form-select @error('user_id') is-invalid @enderror" id="basicSelect"
                                         name="user_id">
-                                        @foreach ($users as $user)
+                                        @forelse ($users as $user)
                                             <option value="{{ $user->id }}">{{ $user->name }}
                                             </option>
-                                        @endforeach
+                                        @empty
+                                            <option disabled selected>Tidak Ada User</option>
+                                        @endforelse
                                     </select>
                                     @error('user_id')
                                         <div class="invalid-feedback">
@@ -136,6 +140,7 @@
                             <th>Tanggal Mulai</th>
                             <th>Tanggal Akhir</th>
                             <th>Merk Mobil</th>
+                            <th>Status</th>
                             {{-- <th>Sisa Hari Peminjaman</th> --}}
                             <th>Action</th>
                         </tr>
@@ -150,6 +155,7 @@
                                 <td>{{ $car->date_start }}</td>
                                 <td>{{ $car->date_end }}</td>
                                 <td>{{ $car->car->brand }}</td>
+                                <td>{{ $car->status }}</td>
                                 {{-- <td>{{ $car->remaining_days }}</td> --}}
                                 <td>
                                     <a href="{{ route('admin.car.edit', $car->id) }}"
