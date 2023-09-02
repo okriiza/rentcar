@@ -42,7 +42,7 @@ class UserController extends Controller
             'password' => Hash::make($request->password),
         ]);
 
-        return to_route('admin.user.index')->with('success', 'User Berhasil Di Buat');
+        return to_route('user.index')->with('success', 'User Berhasil Di Buat');
     }
 
     public function destroy($id)
@@ -50,6 +50,6 @@ class UserController extends Controller
         $user = User::findOrFail($id);
         $user->delete();
 
-        return to_route('admin.user.index')->with('success', 'User Berhasil Di Hapus');
+        return to_route('user.index')->with('success', 'User Berhasil Di Hapus');
     }
 }

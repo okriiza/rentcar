@@ -32,7 +32,7 @@
             <div class="card-header">
                 <div class="d-flex justify-content-between align-items-center">
                     <h5 class="card-title">List Mobil</h5>
-                    <a href="{{ route('admin.car.create') }}" class="btn btn-primary">Tambah Mobil</a>
+                    <a href="{{ route('car.create') }}" class="btn btn-primary">Tambah Mobil</a>
                 </div>
             </div>
             <div class="card-body">
@@ -66,12 +66,11 @@
                                 <td>Rp.{{ number_format($car->rental_rates, 0, ',', '.') }}</td>
                                 <td>{{ $car->status }}</td>
                                 <td>
-                                    <a href="{{ route('admin.car.edit', $car->id) }}"
+                                    <a href="{{ route('car.edit', $car->id) }}"
                                         class="btn btn-outline-info shadow btn-xs sharp me-1 mb-1">
                                         <i class="bi bi-pencil"></i>
                                     </a>
-                                    <form action="{{ route('admin.car.destroy', $car->id) }}" method="post"
-                                        class="d-inline">
+                                    <form action="{{ route('car.destroy', $car->id) }}" method="post" class="d-inline">
                                         @csrf
                                         @method('delete')
                                         <button class="btn btn-outline-danger shadow btn-xs sharp me-1 mb-1">

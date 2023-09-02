@@ -35,7 +35,7 @@
                 </div>
             </div>
             <div class="card-body">
-                <form class="form form-vertical" method="GET" action="{{ route('admin.carreturn.search') }}">
+                <form class="form form-vertical" method="GET" action="{{ route('carreturn.search') }}">
                     @csrf
                     <div class="form-body">
                         <div class="row">
@@ -62,69 +62,73 @@
                     </div>
                 </form>
                 <div class="row mt-5">
-                    @foreach ($cars as $car)
-                        @php
-                            $totalSewa = Carbon\Carbon::parse($car->date_start)->diffInDays($car->date_end) * $car->car->rental_rates;
-                        @endphp
-                        <div class="col-4">
-                            <div class="row">
-                                <div class="col-6">
-                                    <label>User Peminjam</label>
-                                    <p>{{ $car->user->name }}</p>
-                                </div>
-                                <div class="col-6">
-                                    <label>Tanggal Mulai</label>
-                                    <p>{{ $car->date_start }}</p>
-                                </div>
-                                <div class="col-6">
-                                    <label>Tanggal Selesai</label>
-                                    <p>{{ $car->date_end }}</p>
-                                </div>
-                                <div class="col-6">
-                                    <label>Merk</label>
-                                    <p>{{ $car->car->brand }}</p>
-                                </div>
-                                <div class="col-6">
-                                    <label>Plat Nomor Mobil</label>
-                                    <p>{{ $car->car->plat_number }}</p>
-                                </div>
-                                <div class="col-6">
-                                    <label>Model</label>
-                                    <p>{{ $car->car->model }}</p>
-                                </div>
-                                <div class="col-6">
-                                    <label>User Peminjam</label>
-                                    <p>{{ $car->car->model }}</p>
-                                </div>
-                                <div class="col-6">
-                                    <label>Harga Per Hari</label>
-                                    <p>Rp.{{ number_format($car->car->rental_rates) }}</p>
-                                </div>
-                                <div class="col-6">
-                                    <label>Total Hari Peminjaman</label>
-                                    <p>{{ Carbon\Carbon::parse($car->date_start)->diffInDays($car->date_end) }}</p>
-                                </div>
-                                <div class="col-6">
-                                    <label>Total Pembayaran</label>
-                                    <p>Rp.{{ number_format($totalSewa) }}</p>
-                                </div>
-                                <form action="{{ route('admin.carreturn.store') }}" method="post">
-                                    @csrf
+
+                    @isset($cars)
+                        @forelse ($cars as $car)
+                            @php
+                                $totalSewa = Carbon\Carbon::parse($car->date_start)->diffInDays($car->date_end) * $car->car->rental_rates;
+                            @endphp
+                            <div class="col-4">
+                                <div class="row">
+                                    <div class="col-6">
+                                        <label>User Peminjam</label>
+                                        <p>{{ $car->user->name }}</p>
+                                    </div>
+                                    <div class="col-6">
+                                        <label>Tanggal Mulai</label>
+                                        <p>{{ $car->date_start }}</p>
+                                    </div>
+                                    <div class="col-6">
+                                        <label>Tanggal Selesai</label>
+                                        <p>{{ $car->date_end }}</p>
+                                    </div>
+                                    <div class="col-6">
+                                        <label>Merk</label>
+                                        <p>{{ $car->car->brand }}</p>
+                                    </div>
+                                    <div class="col-6">
+                                        <label>Plat Nomor Mobil</label>
+                                        <p>{{ $car->car->plat_number }}</p>
+                                    </div>
+                                    <div class="col-6">
+                                        <label>Model</label>
+                                        <p>{{ $car->car->model }}</p>
+                                    </div>
+                                    <div class="col-6">
+                                        <label>User Peminjam</label>
+                                        <p>{{ $car->car->model }}</p>
+                                    </div>
+                                    <div class="col-6">
+                                        <label>Harga Per Hari</label>
+                                        <p>Rp.{{ number_format($car->car->rental_rates) }}</p>
+                                    </div>
+                                    <div class="col-6">
+                                        <label>Total Hari Peminjaman</label>
+                                        <p>{{ Carbon\Carbon::parse($car->date_start)->diffInDays($car->date_end) }}</p>
+                                    </div>
+                                    <div class="col-6">
+                                        <label>Total Pembayaran</label>
+                                        <p>Rp.{{ number_format($totalSewa) }}</p>
+                                    </div>
+                                    <form action="{{ route('carreturn.store') }}" method="post">
+                                        @csrf
 
 
 
-                                    <input type="text" hidden name="car_loan_id" value="{{ $car->id }}">
-                                    <input type="text" hidden name="total" value="{{ $totalSewa }}">
-                                    <input type="text" hidden name="car_id" value="{{ $car->car->id }}">
+                                        <input type="text" hidden name="car_loan_id" value="{{ $car->id }}">
+                                        <input type="text" hidden name="total" value="{{ $totalSewa }}">
+                                        <input type="text" hidden name="car_id" value="{{ $car->car->id }}">
 
-                                    <button class="btn btn-outline-success shadow btn-xs sharp me-1 mb-1">
-                                        <i class="bi bi-arrow-return-right"></i>
-                                        Return
-                                    </button>
-                                </form>
+                                        <button class="btn btn-outline-success shadow btn-xs sharp me-1 mb-1">
+                                            <i class="bi bi-arrow-return-right"></i>
+                                            Return
+                                        </button>
+                                    </form>
+                                </div>
                             </div>
-                        </div>
-                    @endforeach
+                        @empty
+                        @endforelse
+                    @endisset
                 </div>
                 <div class="mt-3 mb-2">
                     <h5>List Pengembalian</h5>

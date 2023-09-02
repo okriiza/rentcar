@@ -35,7 +35,7 @@
                 </div>
             </div>
             <div class="card-body">
-                <form class="form form-vertical" method="POST" action="{{ route('admin.carloan.store') }}">
+                <form class="form form-vertical" method="POST" action="{{ route('carloan.store') }}">
                     @csrf
                     <div class="form-body">
                         <div class="row">
@@ -94,12 +94,20 @@
                                     <label for="users">User Peminjam</label>
                                     <select class="form-select @error('user_id') is-invalid @enderror" id="basicSelect"
                                         name="user_id">
-                                        @forelse ($users as $user)
-                                            <option value="{{ $user->id }}">{{ $user->name }}
+                                        @if (Auth::user()->roles == 'USER')
+                                            <option value="{{ Auth::user()->id }}">
+                                                {{ Auth::user()->name }}
                                             </option>
-                                        @empty
-                                            <option disabled selected>Tidak Ada User</option>
-                                        @endforelse
+                                        @else
+                                            @forelse ($users as $user)
+                                                <option value="{{ $user->id }}">
+                                                    {{ $user->name }}
+                                                </option>
+                                            @empty
+                                                <option disabled selected>Tidak Ada User</option>
+                                            @endforelse
+                                        @endif
+
                                     </select>
                                     @error('user_id')
                                         <div class="invalid-feedback">
@@ -141,8 +149,6 @@
                             <th>Tanggal Akhir</th>
                             <th>Merk Mobil</th>
                             <th>Status</th>
-                            {{-- <th>Sisa Hari Peminjaman</th> --}}
-                            <th>Action</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -156,21 +162,6 @@
                                 <td>{{ $car->date_end }}</td>
                                 <td>{{ $car->car->brand }}</td>
                                 <td>{{ $car->status }}</td>
-                                {{-- <td>{{ $car->remaining_days }}</td> --}}
-                                <td>
-                                    <a href="{{ route('admin.car.edit', $car->id) }}"
-                                        class="btn btn-outline-info shadow btn-xs sharp me-1 mb-1">
-                                        <i class="bi bi-pencil"></i>
-                                    </a>
-                                    <form action="{{ route('admin.car.destroy', $car->id) }}" method="post"
-                                        class="d-inline">
-                                        @csrf
-                                        @method('delete')
-                                        <button class="btn btn-outline-danger shadow btn-xs sharp me-1 mb-1">
-                                            <i class="bi bi-trash"></i>
-                                        </button>
-                                    </form>
-                                </td>
                             </tr>
                         @empty
                             <td colspan="6" class="text-center">Data Tidak Ditemukan</td>

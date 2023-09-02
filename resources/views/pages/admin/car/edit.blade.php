@@ -37,8 +37,7 @@
                     </div>
                     <div class="card-content">
                         <div class="card-body">
-                            <form class="form form-vertical" method="POST"
-                                action="{{ route('admin.car.update', $car->id) }}">
+                            <form class="form form-vertical" method="POST" action="{{ route('car.update', $car->id) }}">
                                 @csrf
                                 @method('PUT')
                                 <div class="form-body">

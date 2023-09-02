@@ -32,7 +32,7 @@
             <div class="card-header">
                 <div class="d-flex justify-content-between align-items-center">
                     <h5 class="card-title">List User</h5>
-                    <a href="{{ route('admin.user.create') }}" class="btn btn-primary">Tambah User</a>
+                    <a href="{{ route('user.create') }}" class="btn btn-primary">Tambah User</a>
                 </div>
             </div>
             <div class="card-body">
@@ -70,8 +70,7 @@
                                     {{-- <a href="#" class="btn btn-outline-info shadow btn-xs sharp me-1 mb-1">
                                         <i class="bi bi-pencil"></i>
                                     </a> --}}
-                                    <form action="{{ route('admin.user.destroy', $user->id) }}" method="post"
-                                        class="d-inline">
+                                    <form action="{{ route('user.destroy', $user->id) }}" method="post" class="d-inline">
                                         @csrf
                                         @method('delete')
                                         <button class="btn btn-outline-danger shadow btn-xs sharp me-1 mb-1">

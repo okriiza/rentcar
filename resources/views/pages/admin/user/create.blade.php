@@ -37,7 +37,7 @@
                     </div>
                     <div class="card-content">
                         <div class="card-body">
-                            <form method="POST" action="{{ route('admin.user.store') }}">
+                            <form method="POST" action="{{ route('user.store') }}">
                                 @csrf
                                 <div class="mb-4 form-group position-relative has-icon-left">
                                     <input class="form-control form-control @error('email') is-invalid @enderror "

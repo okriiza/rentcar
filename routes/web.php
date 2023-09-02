@@ -24,18 +24,21 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', function () {
     return view('welcome');
 });
-Route::middleware('auth')->prefix('admin')->name('admin.')->group(function () {
+
+Route::middleware(['auth'])->prefix('pages')->group(function () {
 
     Route::get('dashboard', [DashboardController::class, 'index'])
         ->name('dashboard');
 
-    //user
-    Route::get('/user', [UserController::class, 'index'])->name('user.index');
-    Route::get('/user/create', [UserController::class, 'create'])->name('user.create');
-    Route::post('/user', [UserController::class, 'store'])->name('user.store');
-    Route::delete('/user/{id}', [UserController::class, 'destroy'])->name('user.destroy');
-    //car
-    Route::resource('car', CarController::class);
+    Route::middleware('admin')->group(function () {
+        //user
+        Route::get('/user', [UserController::class, 'index'])->name('user.index');
+        Route::get('/user/create', [UserController::class, 'create'])->name('user.create');
+        Route::post('/user', [UserController::class, 'store'])->name('user.store');
+        Route::delete('/user/{id}', [UserController::class, 'destroy'])->name('user.destroy');
+        //car
+        Route::resource('car', CarController::class);
+    });
 
     Route::get('/car-loan', [CarLoanController::class, 'index'])->name('carloan.index');
     Route::post('/car-loan', [CarLoanController::class, 'store'])->name('carloan.store');
@@ -49,6 +52,8 @@ Route::middleware('auth')->prefix('admin')->name('admin.')->group(function () {
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
 
+
+
 // Route::get('/dashboard', function () {
 //     return view('dashboard');
 // })->middleware(['auth', 'verified'])->name('dashboard');
@@ -60,4 +65,3 @@ Route::middleware('auth')->prefix('admin')->name('admin.')->group(function () {
 // });
 
 require __DIR__ . '/auth.php';
-// require __DIR__ . '/components.php';

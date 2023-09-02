@@ -40,6 +40,6 @@ class CarLoanController extends Controller
       'status' => 'TIDAK TERSEDIA'
     ]);
 
-    return to_route('admin.carloan.index')->with('success', 'Data Peminjaman Berhasil Di Tambahkan');
+    return to_route('carloan.index')->with('success', 'Data Peminjaman Berhasil Di Tambahkan');
   }
 }

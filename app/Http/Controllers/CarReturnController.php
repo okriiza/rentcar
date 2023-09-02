@@ -11,13 +11,13 @@ class CarReturnController extends Controller
 {
     public function index()
     {
-        $cars = CarLoan::with('car', 'user')
-            ->where('status', '=', 'BELUM LUNAS')
-            ->get();
+        // $cars = CarLoan::with('car', 'user')
+        //     ->where('status', '=', 'BELUM LUNAS')
+        //     ->get();
         $carReturn = CarReturn::with(['carloan' => function ($q) {
             $q->with('car', 'user');
         }])->get();
-        return view('pages.admin.car-return.index', compact('cars', 'carReturn'));
+        return view('pages.admin.car-return.index', compact('carReturn'));
     }
 
     public function search(Request $request)
@@ -59,6 +59,6 @@ class CarReturnController extends Controller
             'status' => 'TERSEDIA'
         ]);
 
-        return to_route('admin.carreturn.index')->with('success', 'Pengembalian Berhasil');
+        return to_route('carreturn.index')->with('success', 'Pengembalian Berhasil');
     }
 }

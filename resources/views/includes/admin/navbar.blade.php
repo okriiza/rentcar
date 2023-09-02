@@ -33,7 +33,7 @@
                             <h6 class="dropdown-header">{{ Auth::user()->name ?? '' }}</h6>
                         </li>
                         <li>
-                            <a class="dropdown-item" href="{{ route('admin.profile.edit') }}"><i
+                            <a class="dropdown-item" href="{{ route('profile.edit') }}"><i
                                     class="icon-mid bi bi-person me-2"></i> My
                                 Profile</a>
                         </li>

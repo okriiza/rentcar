@@ -32,7 +32,7 @@ class CarController extends Controller
             'rental_rates' => $request->rental_rates
         ]);
 
-        return to_route('admin.car.index')->with('success', 'Data Berhasil Di Buat');
+        return to_route('car.index')->with('success', 'Data Berhasil Di Buat');
     }
     public function edit($id)
     {
@@ -56,12 +56,12 @@ class CarController extends Controller
             'rental_rates' => $request->rental_rates
         ]);
 
-        return to_route('admin.car.index')->with('success', 'Data Berhasil Di Update');
+        return to_route('car.index')->with('success', 'Data Berhasil Di Update');
     }
     public function destroy($id)
     {
         $car = Car::findOrFail($id);
         $car->delete();
-        return to_route('admin.car.index')->with('success', 'Data Berhasil Di Hapus');
+        return to_route('car.index')->with('success', 'Data Berhasil Di Hapus');
     }
 }

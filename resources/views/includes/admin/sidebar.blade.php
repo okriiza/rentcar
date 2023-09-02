@@ -43,32 +43,35 @@
             <ul class="menu">
                 <li class="sidebar-title">Menu</li>
 
-                <li class="sidebar-item {{ request()->routeIs('admin.dashboard') ? 'active' : '' }}">
-                    <a href="{{ route('admin.dashboard') }}" class="sidebar-link">
+                <li class="sidebar-item {{ request()->routeIs('dashboard') ? 'active' : '' }}">
+                    <a href="{{ route('dashboard') }}" class="sidebar-link">
                         <i class="bi bi-grid-fill"></i>
                         <span>Dashboard</span>
                     </a>
                 </li>
-                <li class="sidebar-item {{ request()->routeIs('admin.user.index') ? 'active' : '' }}">
-                    <a href="{{ route('admin.user.index') }}" class="sidebar-link">
-                        <i class="bi bi-person"></i>
-                        <span>User</span>
-                    </a>
-                </li>
-                <li class="sidebar-item {{ request()->routeIs('admin.car.index') ? 'active' : '' }}">
-                    <a href="{{ route('admin.car.index') }}" class="sidebar-link">
-                        <i class="bi bi-car-front"></i>
-                        <span>Manajemen Mobil</span>
-                    </a>
-                </li>
-                <li class="sidebar-item {{ request()->routeIs('admin.carloan.index') ? 'active' : '' }}">
-                    <a href="{{ route('admin.carloan.index') }}" class="sidebar-link">
+                @if (Auth::user()->roles == 'ADMIN')
+                    <li class="sidebar-item {{ request()->routeIs('user.index') ? 'active' : '' }}">
+                        <a href="{{ route('user.index') }}" class="sidebar-link">
+                            <i class="bi bi-person"></i>
+                            <span>User</span>
+                        </a>
+                    </li>
+                    <li class="sidebar-item {{ request()->routeIs('car.index') ? 'active' : '' }}">
+                        <a href="{{ route('car.index') }}" class="sidebar-link">
+                            <i class="bi bi-car-front"></i>
+                            <span>Manajemen Mobil</span>
+                        </a>
+                    </li>
+                @endif
+
+                <li class="sidebar-item {{ request()->routeIs('carloan.index') ? 'active' : '' }}">
+                    <a href="{{ route('carloan.index') }}" class="sidebar-link">
                         <i class="bi bi-car-front-fill"></i>
                         <span>Peminjaman Mobil</span>
                     </a>
                 </li>
-                <li class="sidebar-item {{ request()->routeIs('admin.carreturn.index') ? 'active' : '' }}">
-                    <a href="{{ route('admin.carreturn.index') }}" class="sidebar-link">
+                <li class="sidebar-item {{ request()->routeIs('carreturn.index') ? 'active' : '' }}">
+                    <a href="{{ route('carreturn.index') }}" class="sidebar-link">
                         <i class="bi bi-car-front-fill"></i>
                         <span>Pengembalian Mobil</span>
                     </a>
