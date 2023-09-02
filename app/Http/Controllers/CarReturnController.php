@@ -11,9 +11,6 @@ class CarReturnController extends Controller
 {
     public function index()
     {
-        // $cars = CarLoan::with('car', 'user')
-        //     ->where('status', '=', 'BELUM LUNAS')
-        //     ->get();
         $carReturn = CarReturn::with(['carloan' => function ($q) {
             $q->with('car', 'user');
         }])->get();
@@ -31,7 +28,9 @@ class CarReturnController extends Controller
             ->get();
         $carReturn = CarReturn::with(['carloan' => function ($q) {
             $q->with(['car', 'user']);
-        }])->get();
+        }])
+            ->orderBy('created_At', 'desc')
+            ->get();
         return view('pages.admin.car-return.index', compact('cars', 'carReturn'));
     }
 

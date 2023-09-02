@@ -139,6 +139,8 @@
                             <th>Nama</th>
                             <th>Mobil</th>
                             <th>Total</th>
+                            <th>Status</th>
+                            <th>Date</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -150,6 +152,8 @@
                                 <td>{{ $car->carloan->user->name ?? '' }}</td>
                                 <td>{{ $car->carloan->car->brand }} - {{ $car->carloan->car->plat_number }}</td>
                                 <td>Rp.{{ number_format($car->total) }}</td>
+                                <td>{{ $car->carloan->status }}</td>
+                                <td>{{ $car->created_at }}</td>
                             </tr>
                         @empty
                             <td colspan="6" class="text-center">Data Tidak Ditemukan</td>

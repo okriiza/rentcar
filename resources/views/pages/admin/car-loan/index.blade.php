@@ -148,6 +148,7 @@
                             <th>Tanggal Mulai</th>
                             <th>Tanggal Akhir</th>
                             <th>Merk Mobil</th>
+                            <th>Plat Nomor Mobil</th>
                             <th>Status</th>
                         </tr>
                     </thead>
@@ -161,6 +162,7 @@
                                 <td>{{ $car->date_start }}</td>
                                 <td>{{ $car->date_end }}</td>
                                 <td>{{ $car->car->brand }}</td>
+                                <td>{{ $car->car->plat_number }}</td>
                                 <td>{{ $car->status }}</td>
                             </tr>
                         @empty
